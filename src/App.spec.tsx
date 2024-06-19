@@ -1,9 +1,14 @@
 import { describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import App from './App';
+import { RecoilRoot } from 'recoil';
 
 const renderComponent = () => {
-  render(<App />);
+  render(
+    <RecoilRoot>
+      <App />
+    </RecoilRoot>
+  );
 };
 
 describe('test App testing', () => {
@@ -11,7 +16,7 @@ describe('test App testing', () => {
     renderComponent();
 
     const title = await screen.findByText('My todos');
-  
+
     expect(title).not.toBeNull();
-  })
+  });
 });

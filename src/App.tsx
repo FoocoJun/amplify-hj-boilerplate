@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import type { Schema } from '../amplify/data/resource';
 import { generateClient } from 'aws-amplify/data';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
 
 const client = generateClient<Schema>();
 
@@ -22,24 +24,35 @@ function App() {
   }
 
   return (
-    <main>
-      <h1>My todos</h1>
-      <button onClick={createTodo}>+ new</button>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id} onClick={() => deleteTodo(todo.id)}>
-            {todo.content}
-          </li>
-        ))}
-      </ul>
-      <div>
-        🥳 App successfully hosted. Try creating a new todo.
-        <br />
-        <a href="https://docs.amplify.aws/react/start/quickstart/#make-frontend-updates">
-          Review next step of this tutorial.
-        </a>
-      </div>
-    </main>
+    <RecoilRoot>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <main>
+                <h1>My todos</h1>
+                <button onClick={createTodo}>+ new</button>
+                <ul>
+                  {todos.map((todo) => (
+                    <li key={todo.id} onClick={() => deleteTodo(todo.id)}>
+                      {todo.content}
+                    </li>
+                  ))}
+                </ul>
+                <div>
+                  🥳 App successfully hosted. Try creating a new todo.
+                  <br />
+                  <a href="https://docs.amplify.aws/react/start/quickstart/#make-frontend-updates">
+                    Review next step of this tutorial.
+                  </a>
+                </div>
+              </main>
+            }
+          ></Route>
+        </Routes>
+      </BrowserRouter>
+    </RecoilRoot>
   );
 }
 
